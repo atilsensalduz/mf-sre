@@ -8,9 +8,6 @@ jobs:
   build:
     name: Build and Pushing the Image
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
     defaults:
       run:
         working-directory: './service/main'
@@ -25,7 +22,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{github.actor}}
-        password: ${{secrets.GITHUB_TOKEN}}
+        password: ${{secrets.SECRET_TOKEN}}
 
     - name: Build, tag, and push image to GHCR
       id: build-image
@@ -46,5 +43,5 @@ jobs:
     - name: Commit and push changes
       uses: devops-infra/action-commit-push@v0.3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GH_TOKEN }}
         commit_message: Version updated
