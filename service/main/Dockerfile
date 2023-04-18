@@ -1,14 +1,14 @@
 FROM python:slim-buster
 
-RUN adduser --disabled-login appuser
+RUN adduser --home /app --system --group appuser
+
 USER appuser
-WORKDIR /home/appuser
+
+WORKDIR /app
 
 COPY --chown=appuser:appuser requirements.txt requirements.txt
 RUN pip install --user -r requirements.txt
 
-ENV PATH=/home/appuser/.local/bin:$PATH
-
-COPY --chown=appuser:appuser . .
+COPY --chown=appuser:appuser main.py .
 
 ENTRYPOINT python3 main.py
