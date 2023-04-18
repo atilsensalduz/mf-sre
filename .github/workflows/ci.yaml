@@ -25,7 +25,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{github.actor}}
-        password: ${{secrets.SECRET_TOKEN}}
+        password: ${{secrets.GITHUB_TOKEN}}
 
     - name: Build, tag, and push image to GHCR
       id: build-image
@@ -46,5 +46,5 @@ jobs:
     - name: Commit and push changes
       uses: devops-infra/action-commit-push@v0.3
       with:
-        github_token: ${{ secrets.GH_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         commit_message: Version updated
