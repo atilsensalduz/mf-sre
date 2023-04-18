@@ -44,8 +44,8 @@ module "eks_blueprints_kubernetes_addons" {
       add_on_application = true
     }
     workloads = {
-      path               = "envs/dev"
-      repo_url           = "https://github.com/aws-samples/eks-blueprints-workloads.git"
+      path               = "deployment/"
+      repo_url           = "https://github.com/atilsensalduz/mf-sre"
       add_on_application = false
     }
   }

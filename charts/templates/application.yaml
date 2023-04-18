@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: "sre-demo-project"
+  namespace: "argocd" 
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  destinations:
+    - namespace: "dev"
+      server: {{ .Values.spec.destination.server }}
+  sourceRepos:
+    - {{ .Values.spec.apps.repoURL }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "dev-application"
+  namespace: "argocd"
+  labels:
+    {{- toYaml .Values.labels | nindent 4 }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: "sre-demo-project"
+  destination:
+    namespace: "dev"
+    server: {{ .Values.spec.destination.server }}
+  source:
+    repoURL: {{ .Values.spec.apps.ecsdemoCrystal.repoURL }}
+    targetRevision: {{ .Values.spec.apps.ecsdemoCrystal.targetRevision }}
+    path: {{ .Values.spec.apps.ecsdemoCrystal.path }}
+    helm:
+    {{- toYaml .Values.spec.apps.ecsdemoCrystal.helm | nindent 6 }}
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=false # Created with IaC - # https://github.com/argoproj/argo-cd/issues/7799
