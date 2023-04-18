@@ -8,6 +8,6 @@ module "infrastructure" {
   cluster_version = "1.25"
   instance_types  = ["t3.medium"]
   capacity_type   = "SPOT"
-  region          = "us-west-2"
+  region          = "eu-west-1"
 
 }
