@@ -8,6 +8,9 @@ jobs:
   build:
     name: Build and Pushing the Image
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
     defaults:
       run:
         working-directory: './service/main'
