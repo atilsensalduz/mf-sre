@@ -1,5 +1,5 @@
 module "infrastructure" {
-  source = "../modules"
+  source = "./modules"
 
   name = "demo"
 
