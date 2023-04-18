@@ -1,7 +1,7 @@
 FROM python:slim-buster
 
 RUN adduser --home /app --system --group appuser
-ENV PATH="$PATH:/app"
+ENV PATH="$PATH:/app/.local/bin"
 USER appuser
 
 WORKDIR /app
