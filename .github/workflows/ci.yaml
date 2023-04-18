@@ -8,6 +8,8 @@ jobs:
   build:
     name: Build and Pushing the Image
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     defaults:
       run:
         working-directory: './service/main'
@@ -22,7 +24,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{github.actor}}
-        password: ${{secrets.GH_TOKEN}}
+        password: ${{secrets.GITHUB_TOKEN}}
 
     - name: Build, tag, and push image to GHCR
       id: build-image
