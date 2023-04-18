@@ -3,7 +3,7 @@ terraform {
     organization = "atilsensalduz"
 
     workspaces {
-      name = "mf-"
+      name = "mf-sre"
     }
   }
 
@@ -35,7 +35,7 @@ terraform {
 
 
 provider "aws" {
-  region = var.region
+  region = "us-west-2"
 }
 
 provider "kubernetes" {

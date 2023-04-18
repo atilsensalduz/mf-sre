@@ -64,7 +64,6 @@ module "eks_blueprints_kubernetes_addons" {
   enable_yunikorn                       = false
   enable_argo_rollouts                  = true
 
-  tags = local.tags
 }
 
 #---------------------------------------------------------------
