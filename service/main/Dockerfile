@@ -1,6 +1,6 @@
 FROM python:slim-buster
 
-RUN adduser -D appuser
+RUN adduser --disabled-login appuser
 USER appuser
 WORKDIR /home/appuser
 
