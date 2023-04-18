@@ -1,4 +1,5 @@
 FROM python:slim-buster
+LABEL org.opencontainers.image.source="https://github.com/atilsensalduz/mf-sre"
 
 RUN adduser --home /app --system --group appuser
 ENV PATH="$PATH:/app/.local/bin"
