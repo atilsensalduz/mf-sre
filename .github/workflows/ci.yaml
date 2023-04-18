@@ -22,7 +22,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{github.actor}}
-        password: ${{secrets.SECRET_TOKEN}}
+        password: ${{secrets.GH_TOKEN}}
 
     - name: Build, tag, and push image to GHCR
       id: build-image
