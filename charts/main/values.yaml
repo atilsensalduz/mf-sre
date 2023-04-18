@@ -1,0 +1,14 @@
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+  registry: ghcr.io
+  repository: atilsensanlduz/main
+  version: main-a62e07e
+
+app:
+  name: main
+  replicas: 1
+  ports:
+    - name: http
+      value: 8080
