@@ -1,7 +1,14 @@
 FROM python:slim-buster
-RUN mkdir /opt/app
-WORKDIR /opt/app
-COPY main.py .
-COPY requirements.txt .
-RUN pip3 install -r requirements.txt
+
+RUN adduser -D appuser
+USER appuser
+WORKDIR /home/appuser
+
+COPY --chown=appuser:appuser requirements.txt requirements.txt
+RUN pip install --user -r requirements.txt
+
+ENV PATH="/home/appuser/.local/bin:${PATH}"
+
+COPY --chown=appuser:appuser . .
+
 ENTRYPOINT python3 main.py
