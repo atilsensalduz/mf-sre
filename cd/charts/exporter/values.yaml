@@ -15,3 +15,8 @@ app:
   envs:
     - name: MAIN_APP_URL
       value: http://main.main
+  annotations: {
+    prometheus.io/path: "/metrics",
+    prometheus.io/port: '2112',
+    prometheus.io/scrape: 'true'
+  }
