@@ -11,6 +11,7 @@ jobs:
     permissions:
       contents: write
       packages: write
+      issues: write
     defaults:
       run:
         working-directory: './service/main'
