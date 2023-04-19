@@ -36,7 +36,13 @@ jobs:
         echo "Pushing image to GHCR..."
         docker push ghcr.io/atilsensalduz/main:$git_hash
         echo "::set-output name=image::ghcr.io/atilsensalduz/main:$git_hash"
-        
+
+    - name: manual approve before deploy
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ github.TOKEN }}
+        approvers: atilsensalduz
+
     - name: Update Version
       run: |
           git_hash=$(git rev-parse --short "$GITHUB_SHA")
