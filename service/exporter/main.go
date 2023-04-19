@@ -21,7 +21,7 @@ type metrics struct {
 }
 
 func getMetric() (metrics, error) {
-	url := os.Getenv("MAIN_APP_URL")
+	url := os.Getenv("MAIN_APP_URL") + "/metrics"
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
