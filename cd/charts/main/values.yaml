@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   pullPolicy: IfNotPresent
   registry: ghcr.io
-  repository: atilsensanlduz/main
+  repository: atilsensanlduz
   version: ee6cacd
 
 app:
