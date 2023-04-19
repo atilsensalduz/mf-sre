@@ -7,7 +7,6 @@ spec:
   type: ClusterIP
   selector:
     app: {{ .Values.app.name }}
-    release: {{ .Release.Name }}
   ports:
   {{- range .Values.app.ports }}
   - port: {{ .value }}
