@@ -46,17 +46,17 @@ module "eks_blueprints_kubernetes_addons" {
       add_on_application = false
     }
   }
-  
+
   enable_prometheus = true
-  prometheus_helm_config = {
-    name       = "prometheus"
-    repository = "https://prometheus-community.github.io/helm-charts"
-    chart      = "prometheus"
-    namespace  = "prometheus"
-    values = [templatefile("${path.module}/helm-values/prometheus-values.yaml", {
-      operating_system = "linux"
-    })]
-  }
+  # prometheus_helm_config = {
+  #   name       = "prometheus"
+  #   repository = "https://prometheus-community.github.io/helm-charts"
+  #   chart      = "prometheus"
+  #   namespace  = "prometheus"
+  #   values = [templatefile("${path.module}/helm-values/prometheus-values.yaml", {
+  #     operating_system = "linux"
+  #   })]
+  # }
 
 
   # Add-ons
