@@ -46,17 +46,13 @@ module "eks_blueprints_kubernetes_addons" {
       add_on_application = false
     }
   }
-
-  enable_prometheus = true
-  # prometheus_helm_config = {
-  #   name       = "prometheus"
-  #   repository = "https://prometheus-community.github.io/helm-charts"
-  #   chart      = "prometheus"
-  #   namespace  = "prometheus"
-  #   values = [templatefile("${path.module}/helm-values/prometheus-values.yaml", {
-  #     operating_system = "linux"
-  #   })]
-  # }
+  enable_kube_prometheus_stack = true
+  kube_prometheus_stack_helm_config = {
+    namespace = "monitoring"
+    values = [
+      file("${path.module}/helm-values/kube-stack-config.yaml")
+    ]
+  }
 
 
   # Add-ons
@@ -71,7 +67,9 @@ module "eks_blueprints_kubernetes_addons" {
   enable_vpa                            = false
   enable_yunikorn                       = false
   enable_argo_rollouts                  = true
-  enable_grafana                        = true
+  enable_grafana                        = false
+  enable_prometheus                     = false
+
 
 }
 
