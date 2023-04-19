@@ -9,7 +9,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   destinations:
-    - namespace: "dev"
+    - namespace: "main"
       server: {{ .Values.spec.destination.server }}
   sourceRepos:
     - {{ .Values.spec.apps.repoURL }}
@@ -19,8 +19,6 @@ kind: Application
 metadata:
   name: "dev-application"
   namespace: "argocd"
-  labels:
-    {{- toYaml .Values.labels | nindent 4 }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   annotations:
@@ -31,11 +29,9 @@ spec:
     namespace: "dev"
     server: {{ .Values.spec.destination.server }}
   source:
-    repoURL: {{ .Values.spec.apps.ecsdemoCrystal.repoURL }}
-    targetRevision: {{ .Values.spec.apps.ecsdemoCrystal.targetRevision }}
-    path: {{ .Values.spec.apps.ecsdemoCrystal.path }}
-    helm:
-    {{- toYaml .Values.spec.apps.ecsdemoCrystal.helm | nindent 6 }}
+    repoURL: {{ .Values.spec.apps.repoURL }}
+    targetRevision: HEAD
+    path: {{ .Values.spec.apps.main.path }}
   syncPolicy:
     automated:
       prune: true

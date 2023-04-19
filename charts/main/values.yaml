@@ -12,3 +12,12 @@ app:
   ports:
     - name: http
       value: 8080
+
+spec:
+  destination:
+    server: "https://kubernetes.default.svc"
+  apps:
+    repoURL: https://github.com/atilsensalduz/mf-sre
+    main: 
+      path: charts/main
+

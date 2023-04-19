@@ -15,23 +15,14 @@ module "eks_blueprints_kubernetes_addons" {
   enable_amazon_eks_coredns            = true
   enable_amazon_eks_kube_proxy         = true
   enable_amazon_eks_aws_ebs_csi_driver = true
-  
-  enable_argocd                        = true
+
+  enable_argocd = true
   # This example shows how to set default ArgoCD Admin Password using SecretsManager with Helm Chart set_sensitive values.
   argocd_helm_config = {
     set_sensitive = [
       {
         name  = "configs.secret.argocdServerAdminPassword"
         value = bcrypt_hash.argo.id
-      }
-    ]
-  }
-
-  keda_helm_config = {
-    values = [
-      {
-        name  = "serviceAccount.create"
-        value = "false"
       }
     ]
   }
@@ -43,11 +34,11 @@ module "eks_blueprints_kubernetes_addons" {
       repo_url           = "https://github.com/aws-samples/eks-blueprints-add-ons.git"
       add_on_application = true
     }
-    # workloads = {
-    #   path               = "deployment/"
-    #   repo_url           = "https://github.com/atilsensalduz/mf-sre"
-    #   add_on_application = false
-    # }
+    workloads = {
+      path               = "charts/"
+      repo_url           = "https://github.com/atilsensalduz/mf-sre"
+      add_on_application = false
+    }
   }
 
   # Add-ons
@@ -56,7 +47,7 @@ module "eks_blueprints_kubernetes_addons" {
   enable_cert_manager                   = false
   enable_cluster_autoscaler             = false
   enable_karpenter                      = true
-  enable_keda                           = true
+  enable_keda                           = false
   enable_metrics_server                 = true
   enable_prometheus                     = true
   enable_traefik                        = false
