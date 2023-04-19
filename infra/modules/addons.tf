@@ -50,7 +50,7 @@ module "eks_blueprints_kubernetes_addons" {
   kube_prometheus_stack_helm_config = {
     namespace = "monitoring"
     values = [
-      file("${path.module}/helm-values/kube-stack-config.yaml")
+      file("${path.module}/helm-values/prometheus-values.yaml")
     ]
   }
 
