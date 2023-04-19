@@ -8,15 +8,14 @@ metadata:
 spec:
   destination:
     namespace: main
-    server: { { .Values.spec.destination.server } }
+    server: {{ .Values.spec.destination.server }}
   project: default
   source:
     path: cd/charts/main/
-    repoURL: { { .Values.spec.source.repoURL } }
-    targetRevision: { { .Values.spec.source.targetRevision } }
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
   syncPolicy:
     automated:
-      prune: true 
-      selfHeal: true 
-      allowEmpty: true 
-
+      prune: true
+      selfHeal: true
+      allowEmpty: true
