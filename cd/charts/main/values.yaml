@@ -4,7 +4,7 @@ image:
   pullPolicy: IfNotPresent
   registry: ghcr.io
   repository: atilsensalduz
-  version: fdcbfdf
+  version: 12d18a1
 
 app:
   name: main
