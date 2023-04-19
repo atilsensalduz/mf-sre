@@ -19,12 +19,12 @@ module "eks_blueprints_kubernetes_addons" {
   enable_argocd = true
   # This example shows how to set default ArgoCD Admin Password using SecretsManager with Helm Chart set_sensitive values.
   argocd_helm_config = {
-    set = [
-      {
-        name  = "server.service.type"
-        value = "LoadBalancer"
-      }
-    ]
+    # set = [
+    #   {
+    #     name  = "server.service.type"
+    #     value = "LoadBalancer"
+    #   }
+    # ]
     set_sensitive = [
       {
         name  = "configs.secret.argocdServerAdminPassword"
@@ -41,7 +41,7 @@ module "eks_blueprints_kubernetes_addons" {
       add_on_application = true
     }
     workloads = {
-      path               = "charts/"
+      path               = "cd/apps"
       repo_url           = "https://github.com/atilsensalduz/mf-sre"
       add_on_application = false
     }
