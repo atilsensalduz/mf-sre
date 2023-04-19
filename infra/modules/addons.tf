@@ -60,7 +60,7 @@ module "eks_blueprints_kubernetes_addons" {
   enable_vpa                            = false
   enable_yunikorn                       = false
   enable_argo_rollouts                  = true
-
+  enable_grafana                        = true
 }
 
 #---------------------------------------------------------------
