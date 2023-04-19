@@ -30,7 +30,7 @@ def five_x_handler(e):
     return "error"
 
 @app.route("/client_error_endpoint")
-def client_errored_endpoint():
+def errored_endpoint():
     return 400
 
 @app.errorhandler(400)
