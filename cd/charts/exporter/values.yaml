@@ -1,0 +1,14 @@
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+  registry: ghcr.io
+  repository: atilsensalduz
+  version: ee6cacd
+
+app:
+  name: exporter
+  replicas: 1
+  ports:
+    - name: http
+      value: 2112

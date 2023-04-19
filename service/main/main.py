@@ -1,4 +1,5 @@
 from flask import Flask
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
 metric_values = {
@@ -28,6 +29,10 @@ def errored_endpoint():
 def five_x_handler(e):
     metric_values["500_count"] = metric_values["500_count"] + 1
     return "error"
+
+@app.route("/client_error_endpoint")
+def errored_endpoint():
+    return 400
 
 @app.errorhandler(400)
 def four_x_handler(e):

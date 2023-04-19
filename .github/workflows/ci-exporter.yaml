@@ -1,4 +1,4 @@
-name: CI
+name: CI - exporter
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ jobs:
       with:
         filters: |
           workflows:
-            - 'service/main/**'
+            - 'service/exporter/**'
 
   build:
     name: Build and Pushing the Image
@@ -30,7 +30,7 @@ jobs:
       issues: write
     defaults:
       run:
-        working-directory: './service/main'
+        working-directory: './service/exporter'
 
     steps:
     - name: Checkout
@@ -48,10 +48,10 @@ jobs:
       run: |
         # Build a docker container and push it to GHCR
         git_hash=$(git rev-parse --short "$GITHUB_SHA")
-        docker build -t ghcr.io/atilsensalduz/main:$git_hash .
+        docker build -t ghcr.io/atilsensalduz/exporter:$git_hash .
         echo "Pushing image to GHCR..."
-        docker push ghcr.io/atilsensalduz/main:$git_hash
-        echo "::set-output name=image::ghcr.io/atilsensalduz/main:$git_hash"
+        docker push ghcr.io/atilsensalduz/exporter:$git_hash
+        echo "::set-output name=image::ghcr.io/atilsensalduz/exporter:$git_hash"
 
     # - name: manual approve before deploy
     #   uses: trstringer/manual-approval@v1
@@ -62,8 +62,8 @@ jobs:
     - name: Update Version
       run: |
           git_hash=$(git rev-parse --short "$GITHUB_SHA")
-          version=$(cat ../../cd/charts/main/values.yaml | grep version: | awk '{print $2}')
-          sed -i "s/$version/$git_hash/"  ../../cd/charts/main/values.yaml
+          version=$(cat ../../cd/charts/exporter/values.yaml | grep version: | awk '{print $2}')
+          sed -i "s/$version/$git_hash/"  ../../cd/charts/exporter/values.yaml
           
     - name: Commit and push changes
       uses: devops-infra/action-commit-push@v0.3
