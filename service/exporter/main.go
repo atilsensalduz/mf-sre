@@ -74,14 +74,14 @@ var RequestCountMetric = promauto.NewGauge(
 var Four00CountMetric = promauto.NewGauge(
 	prometheus.GaugeOpts{
 		Name: "http_400_response_total",
-		Help: "The total number of http 400 response",
+		Help: "The total number of http response code 400",
 	},
 )
 
 var Five00CountMetric = promauto.NewGauge(
 	prometheus.GaugeOpts{
 		Name: "http_500_response_total",
-		Help: "The total number of http 500 response",
+		Help: "The total number of http response code 500",
 	},
 )
 
