@@ -42,7 +42,7 @@ module "eks_blueprints_kubernetes_addons" {
     }
     workloads = {
       path               = "cd/apps"
-      repo_url           = "https://github.com/atilsensalduz/mf-sre"
+      repo_url           = "git@github.com:atilsensalduz/mf-sre.git"
       add_on_application = false
     }
   }
