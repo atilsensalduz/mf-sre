@@ -48,6 +48,10 @@ module "eks_blueprints_kubernetes_addons" {
   }
   enable_kube_prometheus_stack = true
   kube_prometheus_stack_helm_config = {
+    name       = "kube-prometheus-stack"
+    chart      = "kube-prometheus-stack"
+    repository = "https://prometheus-community.github.io/helm-charts"
+    version    = "43.3.1"
     values = [
       file("${path.module}/helm-values/prometheus-values.yaml")
     ]
