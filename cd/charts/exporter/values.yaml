@@ -13,5 +13,5 @@ app:
     - name: http
       value: 2112
   envs:
-    name: MAIN_APP_URL
-    value: http://main.main
+    - name: MAIN_APP_URL
+      value: http://main.main
