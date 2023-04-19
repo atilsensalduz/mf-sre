@@ -4,10 +4,26 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
+
 jobs:
+  paths-filter:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.filter.outputs.workflows }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          workflows:
+            - 'service/main/**'
+
   build:
     name: Build and Pushing the Image
     runs-on: ubuntu-latest
+    needs: paths-filter
+    if: needs.paths-filter.outputs.output1 == 'true'
     permissions:
       contents: write
       packages: write
@@ -15,7 +31,6 @@ jobs:
     defaults:
       run:
         working-directory: './service/main'
-
 
     steps:
     - name: Checkout
@@ -38,11 +53,11 @@ jobs:
         docker push ghcr.io/atilsensalduz/main:$git_hash
         echo "::set-output name=image::ghcr.io/atilsensalduz/main:$git_hash"
 
-    - name: manual approve before deploy
-      uses: trstringer/manual-approval@v1
-      with:
-        secret: ${{ github.TOKEN }}
-        approvers: atilsensalduz
+    # - name: manual approve before deploy
+    #   uses: trstringer/manual-approval@v1
+    #   with:
+    #     secret: ${{ github.TOKEN }}
+    #     approvers: atilsensalduz
 
     - name: Update Version
       run: |
