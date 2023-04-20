@@ -7,10 +7,10 @@ prometheus-adapter:
     path: ""
   rules:
     custom:
-      - seriesQuery: 'rate(http_requests_total[1m])'
+      - seriesQuery: '{__name__=~"^http_requests_total$"}'
         resources:
           template: <<.Resource>>
         name:
           matches: "http_requests_total"
           as: "http_requests_total_per_min"
-        metricsQuery: sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.GroupBy>>)
+        metricsQuery: rate(http_requests_total[1m])
