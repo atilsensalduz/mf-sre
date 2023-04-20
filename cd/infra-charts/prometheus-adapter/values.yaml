@@ -1,6 +1,6 @@
 repoURL: https://prometheus-community.github.io/helm-charts
 targetRevision: HEAD
-prometheusAdapter:
+prometheus-adapter:
   prometheus:
     url: http://prometheus-server
     port: 80

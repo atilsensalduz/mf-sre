@@ -12,9 +12,8 @@ spec:
     targetRevision: {{ .Values.targetRevision }}
     path: cd/infra-charts/prometheus-adapter/
     helm:
-      values: |
-        prometheus-adapter:
-        {{- toYaml .Values.prometheusAdapter | nindent 10 }}
+      valueFiles:
+        - values.yaml 
   destination:   
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: prometheus
