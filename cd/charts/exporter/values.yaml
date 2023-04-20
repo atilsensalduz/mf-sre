@@ -14,7 +14,7 @@ app:
       value: 2112
   envs:
     - name: MAIN_APP_URL
-      value: http://main.main
+      value: http://main.main:8080
   annotations: {
     prometheus.io/path: "/metrics",
     prometheus.io/port: '2112',
