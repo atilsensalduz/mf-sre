@@ -9,9 +9,7 @@ prometheus-adapter:
     custom:
     - seriesQuery: '{__name__=~"^http_requests_total$"}'
       resources:
-        overrides:
-          kubernetes_namespace: {resource: "namespace"}
-          kubernetes_pod_name: {resource: "pod"}
+        template: <<.Resource>>
       name:
         matches: "http_requests_total"
         as: http_requests_total_per_min"
