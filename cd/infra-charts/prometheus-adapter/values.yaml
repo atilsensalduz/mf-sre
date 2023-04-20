@@ -1,0 +1,7 @@
+repoURL: https://prometheus-community.github.io/helm-charts
+targetRevision: HEAD
+values:
+  prometheus:
+    url: http://prometheus-server
+    port: 80
+    path: ""
