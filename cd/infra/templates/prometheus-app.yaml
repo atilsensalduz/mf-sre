@@ -10,9 +10,9 @@ spec:
   source:
     repoURL: {{ .Values.prometheusStack.repoURL }}
     targetRevision: {{ .Values.prometheusStack.targetRevision }}
+    path: cd/infra-charts/prometheus/
   destination:   
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
-    path: cd/infra-charts/prometheus/
     namespace: prometheus
   syncPolicy:
     automated:
