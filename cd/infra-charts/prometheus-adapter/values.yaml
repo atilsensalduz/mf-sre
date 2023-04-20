@@ -11,6 +11,6 @@ prometheus-adapter:
         resources:
           template: <<.Resource>>
         name:
-          matches: ""
-          as: "my_custom_metric"
+          matches: "http_requests_total"
+          as: "http_requests_total_sum"
         metricsQuery: sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.GroupBy>>)
