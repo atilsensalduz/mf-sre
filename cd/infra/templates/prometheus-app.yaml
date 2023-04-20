@@ -10,9 +10,9 @@ spec:
   source:
     repoURL: {{ .Values.prometheusStack.repoURL }}
     targetRevision: {{ .Values.prometheusStack.targetRevision }}
-    destination:   
-      server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
-      namespace: prometheus
+  destination:   
+    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    namespace: prometheus
   syncPolicy:
     automated:
       prune: true

@@ -13,9 +13,9 @@ spec:
     helm:
       values: |
         {{- toYaml .Values.prometheusStack.values | nindent 10 }} 
-    destination:
-      server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
-      namespace: prometheus
+  destination:
+    server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    namespace: prometheus
   syncPolicy:
     automated:
       prune: true
