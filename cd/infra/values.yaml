@@ -1,2 +1,6 @@
 repoURL: git@github.com:atilsensalduz/mf-sre.git
 targetRevision: HEAD
+
+prometheus:
+
+prometheusAdapter:
