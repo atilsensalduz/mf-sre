@@ -33,7 +33,6 @@ module "eks_blueprints_kubernetes_addons" {
     ]
   }
 
-  enable_kube_prometheus_stack = true
   kube_prometheus_stack_helm_config = {
     name       = "kube-prometheus-stack"
     chart      = "kube-prometheus-stack"
@@ -73,7 +72,7 @@ module "eks_blueprints_kubernetes_addons" {
   enable_argo_rollouts                  = true
   enable_grafana                        = false
   enable_prometheus                     = false
-
+  enable_kube_prometheus_stack          = false
 
 }
 
