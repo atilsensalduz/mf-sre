@@ -5,3 +5,16 @@ prometheus-adapter:
     url: http://prometheus-server
     port: 80
     path: ""
+  rules:
+    custom:
+    - seriesQuery: 'http_requests_total'
+      resources:
+        overrides:
+          kubernetes_namespace:
+            resource: namespace
+          kubernetes_pod_name:
+            resource: pod
+      name:
+        matches: "^(.*)_total"
+        as: "${1}_per_second"
+      metricsQuery: (sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>))
