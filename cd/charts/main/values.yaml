@@ -15,5 +15,5 @@ app:
   hpa:
     minReplicas: 1
     maxReplicas: 15
-    metricName: http_requests_total
+    metricName: http_requests
     metricAverageValue: 1
