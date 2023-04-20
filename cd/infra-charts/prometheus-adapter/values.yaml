@@ -7,7 +7,7 @@ prometheus-adapter:
     path: ""
   rules:
     custom:
-    - seriesQuery: 'http_requests_total{kubernetes_namespace!="",kubernetes_pod_name!=""}'
+    - seriesQuery: 'http_requests_total'
       resources:
         overrides:
           kubernetes_namespace: {resource: "namespace"}
