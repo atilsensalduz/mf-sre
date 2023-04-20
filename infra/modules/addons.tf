@@ -45,7 +45,7 @@ module "eks_blueprints_kubernetes_addons" {
       repo_url           = "git@github.com:atilsensalduz/mf-sre.git"
       add_on_application = false
     }
-    infra_workloads = {
+    infra-workloads = {
       path               = "cd/infra"
       repo_url           = "git@github.com:atilsensalduz/mf-sre.git"
       add_on_application = false
