@@ -1,4 +1,4 @@
-prometheus-stack:
+prometheusStack:
   repoUrl: https://prometheus-community.github.io/helm-charts
   targetRevision: HEAD
   values:
