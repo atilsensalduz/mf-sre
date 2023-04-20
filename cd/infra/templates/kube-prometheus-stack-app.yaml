@@ -14,10 +14,6 @@ spec:
       skipCrds: true
       values: |
         kube-prometheus-stack:
-          prometheus:
-            prometheusSpec:
-              podMonitorSelectorNilUsesHelmValues: false
-              serviceMonitorSelectorNilUsesHelmValues: false
         {{- toYaml .Values.kube-prometheus-stack.kubePrometheusStack | nindent 10 }}
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}

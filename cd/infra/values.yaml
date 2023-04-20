@@ -2,34 +2,38 @@ kube-prometheus-stack:
   repoUrl: https://prometheus-community.github.io/helm-charts
   targetRevision: HEAD
   kubePrometheusStack:
-    additionalScrapeConfigs:
-    - job_name: metric-exporter
-      scrape_interval: 15s
-      kubernetes_sd_configs:
-      - role: pod
-        namespaces:
-          names:
-            - exporter
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: namespace
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
-        target_label: pod
-      - source_labels: [__address__]
-        action: replace
-        regex: ([^:]+)(?::\d+)?
-        replacement: ${1}:21112
-        target_label: __address__
-      - source_labels: [__meta_kubernetes_pod_label_app]
-        action: keep
-        regex: exporter
-    storageSpec:
-    volumeClaimTemplate:
-      spec:
-        storageClassName: gp2
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 50Gi
+    prometheus:
+    prometheusSpec:
+      podMonitorSelectorNilUsesHelmValues: false
+      serviceMonitorSelectorNilUsesHelmValues: false
+      additionalScrapeConfigs:
+      - job_name: metric-exporter
+        scrape_interval: 15s
+        kubernetes_sd_configs:
+        - role: pod
+          namespaces:
+            names:
+              - exporter
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_namespace]
+          action: replace
+          target_label: namespace
+        - source_labels: [__meta_kubernetes_pod_name]
+          action: replace
+          target_label: pod
+        - source_labels: [__address__]
+          action: replace
+          regex: ([^:]+)(?::\d+)?
+          replacement: ${1}:21112
+          target_label: __address__
+        - source_labels: [__meta_kubernetes_pod_label_app]
+          action: keep
+          regex: exporter
+      storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp2
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
