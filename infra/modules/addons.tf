@@ -72,7 +72,7 @@ module "eks_blueprints_kubernetes_addons" {
   enable_argo_rollouts                  = true
   enable_grafana                        = false
   enable_prometheus                     = false
-  enable_kube_prometheus_stack          = false
+  enable_kube_prometheus_stack          = true
 
 }
 
