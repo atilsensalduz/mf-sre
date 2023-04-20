@@ -8,11 +8,11 @@ metadata:
 spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
-    repoURL: {{ .Values.prometheusStack.repoURL }}
-    targetRevision: {{ .Values.prometheusStack.targetRevision }}
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
     helm:
       values: |
-        {{- toYaml .Values.prometheusStack.values | nindent 10 }} 
+        {{- toYaml .Values.values | nindent 10 }} 
   destination:
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
     namespace: prometheus

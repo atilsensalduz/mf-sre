@@ -12,6 +12,7 @@ spec:
     targetRevision: {{ .Values.prometheusStack.targetRevision }}
   destination:   
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
+    path: cd/infra-charts/main/
     namespace: prometheus
   syncPolicy:
     automated:

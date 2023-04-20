@@ -1,6 +1,6 @@
 apiVersion: v2
-name: infra-apps
-description: Applications for Infra Components
+name: prometheus-app
+description: Prometheus Application
 type: application
 version: 0.1.0
 appVersion: 1.0.0
