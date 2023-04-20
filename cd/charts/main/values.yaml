@@ -12,3 +12,8 @@ app:
   ports:
     - name: http
       value: 8080
+  hpa:
+    minReplicas: 1
+    maxReplicas: 15
+    metricName: http_requests_total
+    metricAverageValue: 1
