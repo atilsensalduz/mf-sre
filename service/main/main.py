@@ -29,10 +29,6 @@ def five_x_handler(e):
     metric_values["500_count"] = metric_values["500_count"] + 1
     return "error"
 
-@app.route("/client_error_endpoint")
-def errored_endpoint():
-    return 400
-
 @app.errorhandler(400)
 def four_x_handler(e):
     metric_values["400_count"] = metric_values["400_count"] + 1
