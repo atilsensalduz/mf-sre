@@ -16,4 +16,4 @@ app:
     minReplicas: 1
     maxReplicas: 15
     metricName: http_requests_per_second
-    metricAverageValue: 100m
+    metricAverageValue: 10m
