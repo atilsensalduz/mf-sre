@@ -51,7 +51,7 @@ module "eks_blueprints_kubernetes_addons" {
     name       = "kube-prometheus-stack"
     chart      = "kube-prometheus-stack"
     repository = "https://prometheus-community.github.io/helm-charts"
-    version    = "43.3.1"
+    version    = "45.15.0"
     values = [
       file("${path.module}/helm-values/prometheus-values.yaml")
     ]
