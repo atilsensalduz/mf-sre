@@ -1,3 +1,2 @@
-prometheusStack:
-  repoURL: git@github.com:atilsensalduz/mf-sre.git
-  targetRevision: HEAD
+repoURL: git@github.com:atilsensalduz/mf-sre.git
+targetRevision: HEAD

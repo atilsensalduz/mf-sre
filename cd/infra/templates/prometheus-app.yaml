@@ -8,8 +8,8 @@ metadata:
 spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
-    repoURL: {{ .Values.prometheusStack.repoURL }}
-    targetRevision: {{ .Values.prometheusStack.targetRevision }}
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
     path: cd/infra-charts/prometheus/
   destination:   
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
