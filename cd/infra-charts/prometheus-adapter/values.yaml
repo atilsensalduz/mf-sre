@@ -7,10 +7,14 @@ prometheus-adapter:
     path: ""
   rules:
     custom:
-    - seriesQuery: '{__name__=~"^http_requests_total$"}'
+    - seriesQuery: 'http_requests_total{namespace!="",pod!=""}'
       resources:
-        template: <<.Resource>>
+        overrides:
+          namespace:
+            resource: namespace
+          pod: 
+            resource: pod
       name:
-        matches: "http_requests_total"
-        as: http_requests_total_per_min"
-      metricsQuery: 'rate(<<.Series>>[1m])'
+        matches: "^(.*)_total"
+        as: "${1}_per_second"
+      metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)'
