@@ -33,6 +33,17 @@ module "eks_blueprints_kubernetes_addons" {
     ]
   }
 
+  enable_kube_prometheus_stack = true
+  kube_prometheus_stack_helm_config = {
+    name       = "kube-prometheus-stack"
+    chart      = "kube-prometheus-stack"
+    repository = "https://prometheus-community.github.io/helm-charts"
+    version    = "45.15.0"
+    values = [
+      file("${path.module}/helm-values/prometheus-values.yaml")
+    ]
+  }
+
   argocd_manage_add_ons = true # Indicates that ArgoCD is responsible for managing/deploying add-ons
   argocd_applications = {
     addons = {
@@ -45,16 +56,6 @@ module "eks_blueprints_kubernetes_addons" {
       repo_url           = "git@github.com:atilsensalduz/mf-sre.git"
       add_on_application = false
     }
-  }
-  enable_kube_prometheus_stack = true
-  kube_prometheus_stack_helm_config = {
-    name       = "kube-prometheus-stack"
-    chart      = "kube-prometheus-stack"
-    repository = "https://prometheus-community.github.io/helm-charts"
-    version    = "45.15.0"
-    values = [
-      file("${path.module}/helm-values/prometheus-values.yaml")
-    ]
   }
 
 
