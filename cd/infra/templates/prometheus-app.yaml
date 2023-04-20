@@ -1,23 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kube-prometheus-stack
+  name: prometheus
   namespace: "argocd"
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: {{ .Values.argoProject | default "default" }}
   source:
-    repoURL: {{ .Values.kube-prometheus-stack.repoUrl }}
-    targetRevision: {{ .Values.kube-prometheus-stack.targetRevision }}
+    repoURL: {{ .Values.prometheus-stack.repoUrl }}
+    targetRevision: {{ .Values.prometheus-stack.targetRevision }}
     helm:
-      skipCrds: true
       values: |
-        kube-prometheus-stack:
-        {{- toYaml .Values.kube-prometheus-stack.kubePrometheusStack | nindent 10 }}
-  destination:
+        prometheus:
+        {{- toYaml .Values.prometheus-stack.values | nindent 10 }}  
     server: {{ .Values.destinationServer | default "https://kubernetes.default.svc" }}
-    namespace: kube-prometheus-stack
+    namespace: prometheus
   syncPolicy:
     automated:
       prune: true

@@ -1,12 +1,8 @@
-kube-prometheus-stack:
+prometheus-stack:
   repoUrl: https://prometheus-community.github.io/helm-charts
   targetRevision: HEAD
-  kubePrometheusStack:
-    prometheus:
-    prometheusSpec:
-      podMonitorSelectorNilUsesHelmValues: false
-      serviceMonitorSelectorNilUsesHelmValues: false
-      additionalScrapeConfigs:
+  values:
+    extraScrapeConfigs:
       - job_name: metric-exporter
         scrape_interval: 15s
         kubernetes_sd_configs:
@@ -29,11 +25,3 @@ kube-prometheus-stack:
         - source_labels: [__meta_kubernetes_pod_label_app]
           action: keep
           regex: exporter
-      storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: gp2
-          accessModes: ["ReadWriteOnce"]
-          resources:
-            requests:
-              storage: 50Gi
