@@ -6,6 +6,8 @@ metadata:
 {{ toYaml .Values.app.annotations | indent 4 }}
 spec:
   replicas: {{ .Values.app.replicas }}
+  strategy:
+{{ toYaml .Values.app.strategy | indent 4 }}
   selector:
     matchLabels:
       app: {{ .Values.app.name }}

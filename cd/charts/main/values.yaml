@@ -17,3 +17,11 @@ app:
     maxReplicas: 15
     metricName: http_requests_per_second
     metricAverageValue: 10
+  
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+
+    

@@ -20,3 +20,9 @@ app:
     prometheus.io/port: '2112',
     prometheus.io/scrape: 'true'
   }
+
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
