@@ -28,6 +28,10 @@ terraform {
       source  = "viktorradnai/bcrypt"
       version = ">= 0.1.2"
     }
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = ">= 1.14"
+    }
   }
 
   required_version = ">= 1.1.9"
