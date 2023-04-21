@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: {{ .Values.app.name }}
 spec:
-  replicas: {{ .Values.app.replicas }}
   strategy:
 {{ toYaml .Values.app.strategy | indent 4 }}
   selector:
