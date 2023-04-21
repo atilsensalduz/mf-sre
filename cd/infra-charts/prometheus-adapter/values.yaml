@@ -7,7 +7,7 @@ prometheus-adapter:
     path: ""
   rules:
     external:
-    - seriesQuery: '{__name__="http_requests_total",name!=""}'
+    - seriesQuery: '{__name__="http_requests_total"}'
       resources:
         overrides: { namespace: {resource: "namespace"} }
       name:
