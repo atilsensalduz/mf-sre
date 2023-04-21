@@ -97,7 +97,6 @@ module "karpenter" {
   irsa_oidc_provider_arn = module.eks.oidc_provider_arn
   create_irsa            = false # IRSA will be created by the kubernetes-addons module
 
-  tags = local.tags
 }
 
 resource "kubectl_manifest" "karpenter_provisioner" {
