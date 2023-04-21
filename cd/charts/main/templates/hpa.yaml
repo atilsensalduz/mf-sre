@@ -10,8 +10,8 @@ spec:
   minReplicas: {{ .Values.app.hpa.minReplicas }}
   maxReplicas: {{ .Values.app.hpa.maxReplicas }}
   metrics:
-    - type: Pods
-      pods:
+    - type: External
+      external:
         metric:
           name: {{ .Values.app.hpa.metricName }}
         target:

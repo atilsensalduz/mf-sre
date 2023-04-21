@@ -6,12 +6,10 @@ prometheus-adapter:
     port: 80
     path: ""
   rules:
-    custom:
-    - seriesQuery: 'http_requests_total{namespace!="",pod!=""}'
+    external:
+    - seriesQuery: '{__name__="http_requests_total",name!=""}'
       resources:
-        overrides:
-          namespace:
-            resource: namespace
+        overrides: { namespace: {resource: "namespace"} }
       name:
         matches: "^(.*)_total"
         as: "${1}_per_second"
