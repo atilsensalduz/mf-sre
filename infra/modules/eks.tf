@@ -17,11 +17,14 @@ module "eks" {
     initial = {
       instance_types = var.instance_types
       capacity_type  = var.capacity_type
-      
+
       min_size     = 1
       max_size     = 5
       desired_size = 4
     }
+  }
+  cluster_security_group_tags = {
+    "karpenter.sh/discovery" = var.name
   }
 
 }
