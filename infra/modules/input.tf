@@ -35,7 +35,3 @@ variable "vpc_cidr" {
 variable "argocd_repository_url" {
 	type = string
 }
-
-variable "argocd_repository_ssh_key" {
-	type = string
-}

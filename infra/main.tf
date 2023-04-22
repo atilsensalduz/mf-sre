@@ -1,18 +1,5 @@
 
 
-
-locals {
-  region = "eu-west-1"
-}
-
-provider "aws" {
-  region = local.region
-}
-
-data "aws_ssm_parameter" "argocd_repository_ssh_key" {
-  name            = "argocd_repository_ssh_key"
-}
-
 module "infrastructure" {
   source = "./modules"
 
@@ -26,5 +13,4 @@ module "infrastructure" {
   region          = local.region
 
   argocd_repository_url     = "git@github.com:atilsensalduz/mf-sre.git"
-  argocd_repository_ssh_key = data.aws_ssm_parameter.argocd_repository_ssh_key
 }

@@ -4,7 +4,7 @@ locals {
       name          = var.name
       url           = var.argocd_repository_url
       type          = "git"
-      sshPrivateKey = var.argocd_repository_ssh_key
+      sshPrivateKey = data.aws_ssm_parameter.argocd_repository_ssh_key
     }
   }
 }
@@ -98,6 +98,10 @@ resource "aws_secretsmanager_secret" "argocd" {
 resource "aws_secretsmanager_secret_version" "argocd" {
   secret_id     = aws_secretsmanager_secret.argocd.id
   secret_string = random_password.argocd.result
+}
+
+data "aws_ssm_parameter" "argocd_repository_ssh_key" {
+  name            = "argocd_repository_ssh_key"
 }
 
 module "karpenter" {
