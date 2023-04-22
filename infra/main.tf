@@ -1,7 +1,7 @@
 
-data "aws_ssm_parameter" "secret" {
-	name = "argocd_repository_ssh_key"
-	with_decryption = false
+data "aws_ssm_parameter" "argocd_repository_ssh_key" {
+  name            = "argocd_repository_ssh_key"
+  with_decryption = false
 }
 
 module "infrastructure" {
@@ -16,5 +16,6 @@ module "infrastructure" {
   capacity_type   = "SPOT"
   region          = "eu-west-1"
 
-  argocd_repository_url = "git@github.com:atilsensalduz/mf-sre.git"
+  argocd_repository_url     = "git@github.com:atilsensalduz/mf-sre.git"
+  argocd_repository_ssh_key = data.aws_ssm_parameter.argocd_repository_ssh_key
 }
