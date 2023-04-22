@@ -31,3 +31,11 @@ variable "vpc_cidr" {
   type        = string
   description = "The CIDR block of VPC"
 }
+
+variable "argocd_repository_url" {
+	type = string
+}
+
+variable "argocd_repository_ssh_key" {
+	type = string
+}

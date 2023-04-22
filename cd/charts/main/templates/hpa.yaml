@@ -9,6 +9,13 @@ spec:
     name: {{ .Values.app.name }}
   minReplicas: {{ .Values.app.hpa.minReplicas }}
   maxReplicas: {{ .Values.app.hpa.maxReplicas }}
+  behavior:
+  scaleDown:
+    stabilizationWindowSeconds: 60
+    policies:
+    - type: Percent
+      value: 10
+      periodSeconds: 60
   metrics:
     - type: External
       external:

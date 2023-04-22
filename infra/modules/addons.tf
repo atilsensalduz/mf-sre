@@ -1,3 +1,14 @@
+locals {
+  argocd_repositories = {
+    "private-repo" = {
+      name          = var.name
+      url           = var.argocd_repository_url
+      type          = "git"
+      sshPrivateKey = var.argocd_repository_ssh_key
+    }
+  }
+}
+
 ################################################################################
 # Kubernetes Addons
 ################################################################################
@@ -19,12 +30,12 @@ module "eks_blueprints_kubernetes_addons" {
   enable_argocd = true
   # This example shows how to set default ArgoCD Admin Password using SecretsManager with Helm Chart set_sensitive values.
   argocd_helm_config = {
-    # set = [
-    #   {
-    #     name  = "server.service.type"
-    #     value = "LoadBalancer"
-    #   }
-    # ]
+    set = [
+      {
+        name  = "configs.repositories"
+        value = local.argocd_repositories
+      }
+    ]
     set_sensitive = [
       {
         name  = "configs.secret.argocdServerAdminPassword"
@@ -51,14 +62,14 @@ module "eks_blueprints_kubernetes_addons" {
       add_on_application = false
     }
 
-}
+  }
 
 
   # Add-ons
-  enable_karpenter                      = true
-  enable_keda                           = false
-  enable_metrics_server                 = true
-  enable_argo_rollouts                  = true
+  enable_karpenter      = true
+  enable_keda           = false
+  enable_metrics_server = true
+  enable_argo_rollouts  = true
 }
 
 #---------------------------------------------------------------
