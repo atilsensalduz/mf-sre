@@ -10,7 +10,6 @@ provider "aws" {
 
 data "aws_ssm_parameter" "argocd_repository_ssh_key" {
   name            = "argocd_repository_ssh_key"
-  with_decryption = false
 }
 
 module "infrastructure" {
