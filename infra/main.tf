@@ -10,7 +10,7 @@ module "infrastructure" {
   cluster_version = "1.25"
   instance_types  = ["t3.medium"]
   capacity_type   = "SPOT"
-  region          = local.region
+  region          = "eu-west-1"
 
   argocd_repository_url     = "git@github.com:atilsensalduz/mf-sre.git"
 }
