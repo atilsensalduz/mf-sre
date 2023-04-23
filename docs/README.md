@@ -12,6 +12,8 @@ This repository contains the explanation of MF-SRE repository. The repository in
     - ["application"](#application)
   - [Prometheus Exporter](#prometheus-exporter)
   - [Horizontal Pod Autoscaler with External Metrics](#horizontal-pod-autoscaler-with-external-metrics)
+  - [Cluster Autoscaler with Karpenter](#cluster-autoscaler-with-karpenter)
+  - [Documentation](#documentation)
 
 ## Prerequisites
 
@@ -110,3 +112,11 @@ This rule has been configured to extract metrics from the `http_requests_total` 
 - `metricsQuery`: Defines the query used to compute the metric value. In this case, the query computes the rate of change of the metric value over the last 1 minute.
 
 ![external-metric api](./images/external-metric-api.png)
+
+## Cluster Autoscaler with Karpenter
+This project uses karpenter to manage cluster autoscaler
+
+## Documentation
+This project utilizes Docsify to generate GitHub Pages from the README.md file. Docsify is a lightweight documentation generator that allows developers to create beautiful and responsive documentation with minimal effort. By leveraging Markdown syntax and a simple directory structure, Docsify allows you to create professional-looking documentation without having to worry about the design and formatting.
+
+[**Documentation page**](https://atilsensalduz.github.io/mf-sre)
