@@ -52,16 +52,16 @@ jobs:
         INPUT_REPORT: true
       run: |
         ./coverage.sh
-        mv ./coverage.svg ./.github/wiki/
-        test ! -f ./coverage.html || mv ./coverage.html ./.github/wiki/
-        test ! -f ./coverage-chart.svg || mv ./coverage-chart.svg ./.github/wiki/
-        cat ./coverage.log >> ./.github/wiki/coverage.log
-        sort -u -o ./.github/wiki/coverage.log ./.github/wiki/coverage.log
-        
+        mv ./coverage.svg ../../.github/wiki/
+        test ! -f ./coverage.html || mv ./coverage.html ../../.github/wiki/
+        test ! -f ./coverage-chart.svg || mv ./coverage-chart.svg ../../.github/wiki/
+        cat ./coverage.log >> ../../.github/wiki/coverage.log
+        sort -u -o ../../.github/wiki/coverage.log ../../.github/wiki/coverage.log
+
     - name: Push to wiki
       shell: bash
       run: |
-        cd ./.github/wiki/
+        cd ../../.github/wiki/
         git add --all
         git diff-index --quiet HEAD && exit
         git config --local user.name "GitHub Action"

@@ -25,7 +25,9 @@ Before deploying the application and infrastructure, you will need to have the f
   ![Terraform Cloud](./images/terraform-cloud.png)
 
 - `Github` 
-  This project uses Github Actions CI and ghcr.io to store applications' docker images. 
+  This project uses Github Actions CI and ghcr.io to store applications' docker images. You need to give necessary permission to workflow.
+
+  ![Github Action Permission](./images/github-action-permission.png)
 
 ## Deployment
 
@@ -115,6 +117,8 @@ This rule has been configured to extract metrics from the `http_requests_total` 
 
 ## Cluster Autoscaler with Karpenter
 This project uses karpenter to manage cluster autoscaler. It helps to automatically adjust the size of the Kubernetes cluster based on the demand. By deploying Karpenter via EKS Blueprints with Terraform, we can easily and reliably configure and manage the Autoscaler in a scalable way. This ensures that our application can handle varying levels of traffic and workload, and is always available to users. The Karpenter configuration provided in the code block helps to specify the requirements and limits for the Autoscaler, as well as the configuration for the worker nodes.Karpenter to automatically provision and deprovision nodes based on the number of pending pods. This ensures that the cluster always has sufficient resources to handle incoming requests and also optimizes the cluster's resource utilization.
+
+![karpenter](./images/deplyoment.png)
 
 ## Documentation
 This project utilizes Docsify to generate GitHub Pages from the README.md file. Docsify is a lightweight documentation generator that allows developers to create beautiful and responsive documentation with minimal effort. By leveraging Markdown syntax and a simple directory structure, Docsify allows you to create professional-looking documentation without having to worry about the design and formatting.
