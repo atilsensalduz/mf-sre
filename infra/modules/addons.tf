@@ -48,7 +48,7 @@ module "eks_blueprints_kubernetes_addons" {
       },
       {
         name  = "configs.repositories"
-        value = local.argocd_repositories
+        value = local.argocd_repositories[0]
       }
 
     ]
