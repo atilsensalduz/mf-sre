@@ -23,7 +23,20 @@ module "eks" {
       desired_size = 2
     }
   }
-  node_security_group_tags  = {
+
+  aws_auth_roles = [
+    # We need to add in the Karpenter node IAM role for nodes launched by Karpenter
+    {
+      rolearn  = module.karpenter.role_arn
+      username = "system:node:{{EC2PrivateDNSName}}"
+      groups = [
+        "system:bootstrappers",
+        "system:nodes",
+      ]
+    },
+  ]
+
+  node_security_group_tags = {
     "karpenter.sh/discovery" = var.name
   }
 
