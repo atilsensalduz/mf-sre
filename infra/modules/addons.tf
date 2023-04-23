@@ -103,28 +103,33 @@ module "eks_blueprints_kubernetes_addons" {
 # ArgoCD Admin Password credentials with Secrets Manager
 # Login to AWS Secrets manager with the same role as Terraform to extract the ArgoCD admin password with the secret name as "argocd"
 #---------------------------------------------------------------
+# Create a secure password for the ArgoCD admin account and encrypt it with bcrypt
+# to meet ArgoCD's password requirements
 resource "random_password" "argocd" {
   length           = 16
   special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
-# Argo requires the password to be bcrypt, we use custom provider of bcrypt,
-# as the default bcrypt function generates diff for each terraform plan
 resource "bcrypt_hash" "argo" {
   cleartext = random_password.argocd.result
 }
 
+# Create an AWS Secrets Manager secret to store the encrypted ArgoCD admin password
+# with the secret name "argocd"
 resource "aws_secretsmanager_secret" "argocd" {
   name                    = "argocd"
   recovery_window_in_days = 0 # Set to zero for this example to force delete during Terraform destroy
 }
 
+# Add the password to the AWS Secrets Manager secret
 resource "aws_secretsmanager_secret_version" "argocd" {
   secret_id     = aws_secretsmanager_secret.argocd.id
   secret_string = random_password.argocd.result
 }
 
+# Use the Terraform module "terraform-aws-modules/eks/aws//modules/karpenter"
+# to deploy Karpenter, a Kubernetes Autoscaler based on AWS Fargate
 module "karpenter" {
   source  = "terraform-aws-modules/eks/aws//modules/karpenter"
   version = "~> 19.12"
@@ -132,9 +137,9 @@ module "karpenter" {
   cluster_name           = module.eks.cluster_name
   irsa_oidc_provider_arn = module.eks.oidc_provider_arn
   create_irsa            = false # IRSA will be created by the kubernetes-addons module
-
 }
 
+# Create a Karpenter Provisioner manifest to specify the requirements and limits for the Autoscaler
 resource "kubectl_manifest" "karpenter_provisioner" {
   yaml_body = <<-YAML
     apiVersion: karpenter.sh/v1alpha5
@@ -165,11 +170,13 @@ resource "kubectl_manifest" "karpenter_provisioner" {
       ttlSecondsUntilExpired: 604800 # 7 Days = 7 * 24 * 60 * 60 Seconds
   YAML
 
+  # Ensure the Karpenter Provisioner manifest is deployed after the Kubernetes addons module has completed its deployment
   depends_on = [
     module.eks_blueprints_kubernetes_addons
   ]
 }
 
+# Create a Karpenter NodeTemplate manifest to specify the configuration for the worker nodes
 resource "kubectl_manifest" "karpenter_node_template" {
   yaml_body = <<-YAML
     apiVersion: karpenter.k8s.aws/v1alpha1
@@ -186,6 +193,7 @@ resource "kubectl_manifest" "karpenter_node_template" {
         karpenter.sh/discovery: ${module.eks.cluster_name}
   YAML
 
+  # Ensure the Karpenter NodeTemplate manifest is deployed after the Kubernetes addons module has completed its deployment
   depends_on = [
     module.eks_blueprints_kubernetes_addons
   ]
