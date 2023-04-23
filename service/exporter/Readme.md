@@ -1,7 +1,6 @@
 # Exporter Documentation
 [![Go Coverage](https://github.com/atilsensalduz/mf-sre/wiki/coverage.svg)](https://raw.githack.com/wiki/atilsensalduz/mf-sre/coverage.html)
 [![Go Report Card](https://goreportcard.com/badge/github.com/atilsensalduz/mf-sre/service/exporter)](https://goreportcard.com/report/github.com/atilsensalduz/mf-sre/service/exporter)
-[![GoDoc](https://godoc.org/github.com/atilsensalduz/mf-sre/service/exporter/status.svg)](https://godoc.org/github.com/atilsensalduz/mf-sre/service/exporter)
 
 ## Overview
 

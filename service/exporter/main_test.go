@@ -90,3 +90,100 @@ func TestRecordMetrics(t *testing.T) {
 		t.Errorf("Expected response body to contain http_500_response_total but got: %s", body)
 	}
 }
+
+func TestGetMetricWithInvalidRequest(t *testing.T) {
+	// Set up a test HTTP server that always returns a non-OK status code
+	server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
+		rw.WriteHeader(http.StatusBadRequest)
+	}))
+	defer server.Close()
+
+	// Set the MAIN_APP_URL environment variable to the test server's URL
+	os.Setenv("MAIN_APP_URL", server.URL)
+
+	// Call getMetric to retrieve the metrics from the test server
+	_, err := getMetrics(os.Getenv("MAIN_APP_URL"))
+	if err == nil {
+		t.Errorf("Expected an error when making a GET request with a non-OK status code, but got none")
+	}
+}
+
+func TestGetMetricWithInvalidResponseBody(t *testing.T) {
+	// Set up a test HTTP server that returns an invalid JSON response body
+	server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
+		if _, err := rw.Write([]byte(`invalid json`)); err != nil {
+			log.Printf("Error writing response: %v", err)
+			http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
+		}
+	}))
+	defer server.Close()
+
+	// Set the MAIN_APP_URL environment variable to the test server's URL
+	os.Setenv("MAIN_APP_URL", server.URL)
+
+	// Call getMetric to retrieve the metrics from the test server
+	_, err := getMetrics(os.Getenv("MAIN_APP_URL"))
+	if err == nil {
+		t.Errorf("Expected an error when unmarshaling an invalid response body, but got none")
+	}
+}
+
+func TestGetMetricWithTimeout(t *testing.T) {
+	// Set up a test HTTP server that never responds
+	server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
+		time.Sleep(10 * time.Second)
+	}))
+	defer server.Close()
+
+	// Set the MAIN_APP_URL environment variable to the test server's URL
+	os.Setenv("MAIN_APP_URL", server.URL)
+
+	// Call getMetric to retrieve the metrics from the test server
+	_, err := getMetrics(os.Getenv("MAIN_APP_URL"))
+	if err == nil {
+		t.Errorf("Expected an error when making a GET request that times out, but got none")
+	}
+}
+
+func TestGetMetricReturnsErrorOnInvalidURL(t *testing.T) {
+    _, err := getMetrics("invalidurl")
+    if err == nil {
+        t.Errorf("getMetrics should have returned an error on an invalid URL")
+    }
+}
+
+func TestGetMetricReturnsErrorOnInvalidStatusCode(t *testing.T) {
+    // Set up a test HTTP server that returns a 404 Not Found status code
+    server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
+        rw.WriteHeader(http.StatusNotFound)
+    }))
+    defer server.Close()
+
+    // Set the MAIN_APP_URL environment variable to the test server's URL
+    os.Setenv("MAIN_APP_URL", server.URL)
+
+    _, err := getMetrics(os.Getenv("MAIN_APP_URL"))
+    if err == nil {
+        t.Errorf("getMetrics should have returned an error on an invalid status code")
+    }
+}
+
+func TestGetMetricReturnsErrorOnInvalidJSON(t *testing.T) {
+    // Set up a test HTTP server that returns an invalid JSON response
+    server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
+        if _, err := rw.Write([]byte(`{"400_count": "invalid", "500_count": 5, "request_count": 100}`)); err != nil {
+            log.Printf("Error writing response: %v", err)
+            http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
+        }
+    }))
+    defer server.Close()
+
+    // Set the MAIN_APP_URL environment variable to the test server's URL
+    os.Setenv("MAIN_APP_URL", server.URL)
+
+    _, err := getMetrics(os.Getenv("MAIN_APP_URL"))
+    if err == nil {
+        t.Errorf("getMetrics should have returned an error on invalid JSON")
+    }
+}
+
