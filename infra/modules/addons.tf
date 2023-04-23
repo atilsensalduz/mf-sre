@@ -33,16 +33,16 @@ module "eks_blueprints_kubernetes_addons" {
   source = "github.com/aws-ia/terraform-aws-eks-blueprints/modules/kubernetes-addons"
 
   # The ID of the EKS cluster
-  eks_cluster_id       = module.eks.cluster_name
+  eks_cluster_id = module.eks.cluster_name
 
   # The endpoint of the EKS cluster's Kubernetes API server
   eks_cluster_endpoint = module.eks.cluster_endpoint
 
   # The OIDC identity provider used by the EKS cluster
-  eks_oidc_provider    = module.eks.oidc_provider
+  eks_oidc_provider = module.eks.oidc_provider
 
   # The version of the EKS cluster's Kubernetes API server
-  eks_cluster_version  = module.eks.cluster_version
+  eks_cluster_version = module.eks.cluster_version
 
   # Enable the following EKS add-ons.
   enable_amazon_eks_vpc_cni            = true
@@ -97,7 +97,7 @@ module "eks_blueprints_kubernetes_addons" {
   enable_keda           = false
   enable_metrics_server = true
   enable_argo_rollouts  = true
-  
+
   karpenter_node_iam_instance_profile        = module.karpenter.instance_profile_name
   karpenter_enable_spot_termination_handling = true
 }
@@ -140,6 +140,7 @@ module "karpenter" {
   cluster_name           = module.eks.cluster_name
   irsa_oidc_provider_arn = module.eks.oidc_provider_arn
   create_irsa            = false # IRSA will be created by the kubernetes-addons module
+  iam_role_arn           = module.eks.eks_managed_node_groups["initial"].iam_role_arn
 }
 
 # Create a Karpenter Provisioner manifest to specify the requirements and limits for the Autoscaler
