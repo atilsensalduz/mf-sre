@@ -1,0 +1,3 @@
+[submodule "docs"]
+	path = .github/wiki
+	url = git@github.com:atilsensalduz/mf-sre.wiki.git
