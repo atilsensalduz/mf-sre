@@ -62,14 +62,13 @@ module "eks_blueprints_kubernetes_addons" {
       path                = "cd/apps"
       repo_url            = "git@github.com:atilsensalduz/mf-sre.git"
       add_on_application  = false
-      ssh_key_secret_name = "argocd_repository_ssh_key"
+      #ssh_key_secret_name = "argocd_repository_ssh_key"
     }
     infra-workloads = {
       path                = "cd/infra"
       repo_url            = "git@github.com:atilsensalduz/mf-sre.git"
       add_on_application  = false
-      ssh_key_secret_name = "argocd_repository_ssh_key"
-
+      #ssh_key_secret_name = "argocd_repository_ssh_key"
     }
 
   }
