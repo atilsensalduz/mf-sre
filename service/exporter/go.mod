@@ -1,4 +1,4 @@
-module exporter
+module github.com/atilsensalduz/mf-sre/service/exporter
 
 go 1.18
 
