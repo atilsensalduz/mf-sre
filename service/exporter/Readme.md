@@ -1,4 +1,5 @@
 # Exporter Documentation
+[![Go Coverage](https://github.com/atilsensalduz/mf-sre/wiki/coverage.svg)](https://raw.githack.com/wiki/atilsensalduz/mf-sre/coverage.html)
 ## Overview
 
 This application fetches metrics from different services and exposes them as Prometheus metrics. The application uses the `/metrics` endpoint to fetch the metrics data in JSON format. The application periodically fetches the metrics and updates the Prometheus metrics.

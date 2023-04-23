@@ -1,20 +1,12 @@
-locals {
-  argocd_repositories = {
-    "repo" = {
-      name          = var.name
-      url           = var.argocd_repository_url
-      type          = "git"
-      sshPrivateKey = tls_private_key.argocd_repository_ssh_key
-    }
-  }
-}
-
+################################################################################
+# Kubernetes Addons
+################################################################################
 resource "tls_private_key" "argocd_repository_ssh_key" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
-resource "github_repository_deploy_key" "example_repository_deploy_key" {
+resource "github_repository_deploy_key" "workload_repository_deploy_key" {
   title      = "ArgoCD Deploy Key"
   repository = var.argocd_repository_name
   key        = tls_private_key.argocd_repository_ssh_key.public_key_openssh
@@ -45,12 +37,7 @@ module "eks_blueprints_kubernetes_addons" {
       {
         name  = "configs.secret.argocdServerAdminPassword"
         value = bcrypt_hash.argo.id
-      },
-      {
-        name  = "configs.repositories"
-        value = local.argocd_repositories["repo"]
       }
-
     ]
   }
 
@@ -62,14 +49,17 @@ module "eks_blueprints_kubernetes_addons" {
       add_on_application = true
     }
     workloads = {
-      path               = "cd/apps"
-      repo_url           = "git@github.com:atilsensalduz/mf-sre.git"
-      add_on_application = false
+      path                = "cd/apps"
+      repo_url            = "git@github.com:atilsensalduz/mf-sre.git"
+      add_on_application  = false
+      ssh_key_secret_name = "argocd_repository_ssh_key"
     }
     infra-workloads = {
-      path               = "cd/infra"
-      repo_url           = "git@github.com:atilsensalduz/mf-sre.git"
-      add_on_application = false
+      path                = "cd/infra"
+      repo_url            = "git@github.com:atilsensalduz/mf-sre.git"
+      add_on_application  = false
+      ssh_key_secret_name = "argocd_repository_ssh_key"
+
     }
 
   }
@@ -108,6 +98,16 @@ resource "aws_secretsmanager_secret" "argocd" {
 resource "aws_secretsmanager_secret_version" "argocd" {
   secret_id     = aws_secretsmanager_secret.argocd.id
   secret_string = random_password.argocd.result
+}
+
+resource "aws_secretsmanager_secret" "argocd_application_repository_ssh_key" {
+  name                    = "argocd_repository_ssh_key"
+  recovery_window_in_days = 0 # Set to zero for this example to force delete during Terraform destroy
+}
+
+resource "aws_secretsmanager_secret_version" "argocd_application_repository_ssh_key" {
+  secret_id     = aws_secretsmanager_secret.argocd_application_repository_ssh_key.id
+  secret_string = tls_private_key.argocd_repository_ssh_key.private_key_openssh
 }
 
 module "karpenter" {
