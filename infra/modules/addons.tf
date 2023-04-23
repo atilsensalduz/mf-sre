@@ -1,18 +1,29 @@
 locals {
   argocd_repositories = {
-    "private-repo" = {
+    "repo" = {
       name          = var.name
       url           = var.argocd_repository_url
       type          = "git"
-      sshPrivateKey = data.aws_ssm_parameter.argocd_repository_ssh_key
+      sshPrivateKey = tls_private_key.argocd_repository_ssh_key
     }
   }
+}
+
+resource "tls_private_key" "argocd_repository_ssh_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "github_repository_deploy_key" "example_repository_deploy_key" {
+  title      = "ArgoCD Deploy Key"
+  repository = var.argocd_repository_name
+  key        = tls_private_key.argocd_repository_ssh_key.public_key_openssh
+  read_only  = "false"
 }
 
 ################################################################################
 # Kubernetes Addons
 ################################################################################
-
 module "eks_blueprints_kubernetes_addons" {
   source = "github.com/aws-ia/terraform-aws-eks-blueprints/modules/kubernetes-addons"
 

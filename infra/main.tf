@@ -1,5 +1,3 @@
-
-
 module "infrastructure" {
   source = "./modules"
 
@@ -12,5 +10,6 @@ module "infrastructure" {
   capacity_type   = "SPOT"
   region          = "eu-west-1"
 
-  argocd_repository_url     = "git@github.com:atilsensalduz/mf-sre.git"
+  argocd_repository_url  = "git@github.com:atilsensalduz/mf-sre.git"
+  argocd_repository_name = "mf-sre"
 }
