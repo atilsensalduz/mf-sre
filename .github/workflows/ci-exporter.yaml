@@ -23,7 +23,7 @@ jobs:
     name: Build and Pushing the Image
     runs-on: ubuntu-latest
     needs: paths-filter
-    if: needs.paths-filter.outputs.exporter == 'true'
+    #if: needs.paths-filter.outputs.exporter == 'true'
     permissions:
       contents: write
       packages: write

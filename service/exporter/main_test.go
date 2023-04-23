@@ -2,6 +2,7 @@ package main
 
 import (
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -15,7 +16,10 @@ import (
 func TestGetMetric(t *testing.T) {
 	// Set up a test HTTP server
 	server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
-		rw.Write([]byte(`{"400_count": 10, "500_count": 5, "request_count": 100}`))
+		if _, err := rw.Write([]byte(`{"400_count": 10, "500_count": 5, "request_count": 100}`)); err != nil {
+			log.Printf("Error writing response: %v", err)
+			http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
+		}
 	}))
 	defer server.Close()
 
@@ -43,7 +47,10 @@ func TestGetMetric(t *testing.T) {
 func TestRecordMetrics(t *testing.T) {
 	// Set up a test HTTP server that returns a fixed set of metrics
 	server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
-		rw.Write([]byte(`{"400_count": 10, "500_count": 5, "request_count": 100}`))
+		if _, err := rw.Write([]byte(`{"400_count": 10, "500_count": 5, "request_count": 100}`)); err != nil {
+			log.Printf("Error writing response: %v", err)
+			http.Error(rw, "Internal Server Error", http.StatusInternalServerError)
+		}
 	}))
 	defer server.Close()
 
