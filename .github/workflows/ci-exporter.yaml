@@ -76,12 +76,6 @@ jobs:
           version=$(cat ../../cd/charts/exporter/values.yaml | grep version: | awk '{print $2}')
           sed -i "s/$version/$git_hash/"  ../../cd/charts/exporter/values.yaml
     
-  commit_and_push:
-    runs-on: ubuntu-latest
-    needs: build
-    if: needs.paths-filter.outputs.exporter == 'true'
-    steps:
-
     - name: Commit and push changes
       uses: devops-infra/action-commit-push@v0.3
       with:

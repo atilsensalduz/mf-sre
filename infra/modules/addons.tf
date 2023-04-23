@@ -1,11 +1,10 @@
-################################################################################
-# Kubernetes Addons
-################################################################################
+# Generate RSA SSH key for the ArgoCD repository.
 resource "tls_private_key" "argocd_repository_ssh_key" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
+# Create a deploy key in the workload repository to allow ArgoCD to deploy workloads.
 resource "github_repository_deploy_key" "workload_repository_deploy_key" {
   title      = "ArgoCD Deploy Key"
   repository = var.argocd_repository_name
@@ -13,11 +12,13 @@ resource "github_repository_deploy_key" "workload_repository_deploy_key" {
   read_only  = "false"
 }
 
+# Store the ArgoCD repository SSH private key in AWS Secrets Manager.
 resource "aws_secretsmanager_secret" "argocd_application_repository_ssh_key" {
   name                    = "argocd_repository_ssh_key"
   recovery_window_in_days = 0 # Set to zero for this example to force delete during Terraform destroy
 }
 
+# Store the ArgoCD repository SSH private key as a secret value in AWS Secrets Manager.
 resource "aws_secretsmanager_secret_version" "argocd_application_repository_ssh_key" {
   secret_id     = aws_secretsmanager_secret.argocd_application_repository_ssh_key.id
   secret_string = tls_private_key.argocd_repository_ssh_key.private_key_openssh
@@ -26,6 +27,8 @@ resource "aws_secretsmanager_secret_version" "argocd_application_repository_ssh_
 ################################################################################
 # Kubernetes Addons
 ################################################################################
+
+# Import the `kubernetes-addons` module from the official EKS blueprint repository.
 module "eks_blueprints_kubernetes_addons" {
   source = "github.com/aws-ia/terraform-aws-eks-blueprints/modules/kubernetes-addons"
 
@@ -34,14 +37,16 @@ module "eks_blueprints_kubernetes_addons" {
   eks_oidc_provider    = module.eks.oidc_provider
   eks_cluster_version  = module.eks.cluster_version
 
-  # EKS Addons
+  # Enable the following EKS add-ons.
   enable_amazon_eks_vpc_cni            = true
   enable_amazon_eks_coredns            = true
   enable_amazon_eks_kube_proxy         = true
   enable_amazon_eks_aws_ebs_csi_driver = true
 
+  # Enable ArgoCD add-on.
   enable_argocd = true
-  # This example shows how to set default ArgoCD Admin Password using SecretsManager with Helm Chart set_sensitive values.
+
+  # Configure ArgoCD settings with the following Helm chart config options.
   argocd_helm_config = {
     set_sensitive = [
       {
@@ -51,19 +56,25 @@ module "eks_blueprints_kubernetes_addons" {
     ]
   }
 
-  argocd_manage_add_ons = true # Indicates that ArgoCD is responsible for managing/deploying add-ons
+  # Enable the ArgoCD add-ons management.
+  argocd_manage_add_ons = true
+
+  # Define the application repositories that ArgoCD will manage.
   argocd_applications = {
+    # Define the `addons` application repository that will deploy add-ons in the cluster.
     addons = {
       path               = "chart"
       repo_url           = "https://github.com/aws-samples/eks-blueprints-add-ons.git"
       add_on_application = true
     }
+    # Define the `workloads` application repository that will deploy workloads in the cluster.
     workloads = {
       path                = "cd/apps"
       repo_url            = "git@github.com:atilsensalduz/mf-sre.git"
       add_on_application  = false
       ssh_key_secret_name = "argocd_repository_ssh_key"
     }
+    # Define the `infra-workloads` application repository that will deploy infrastructure workloads in the cluster.
     infra-workloads = {
       path                = "cd/infra"
       repo_url            = "git@github.com:atilsensalduz/mf-sre.git"
