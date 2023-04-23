@@ -80,6 +80,8 @@ This project uses prometheus-adapter to use external metrics by HPA. The Prometh
 
 ![hpa](./images/hpa.png)
 
+![hpa detailed](./images/hpa-detailed.png)
+
 ![depyloyment](./images/deplyoment.png)
 
 
