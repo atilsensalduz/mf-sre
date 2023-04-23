@@ -26,5 +26,8 @@ module "eks" {
   cluster_security_group_tags = {
     "karpenter.sh/discovery" = var.name
   }
+  node_security_group_tags  = {
+    "karpenter.sh/discovery" = var.name
+  }
 
 }
