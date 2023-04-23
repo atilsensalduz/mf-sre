@@ -32,9 +32,16 @@ resource "aws_secretsmanager_secret_version" "argocd_application_repository_ssh_
 module "eks_blueprints_kubernetes_addons" {
   source = "github.com/aws-ia/terraform-aws-eks-blueprints/modules/kubernetes-addons"
 
+  # The ID of the EKS cluster
   eks_cluster_id       = module.eks.cluster_name
+
+  # The endpoint of the EKS cluster's Kubernetes API server
   eks_cluster_endpoint = module.eks.cluster_endpoint
+
+  # The OIDC identity provider used by the EKS cluster
   eks_oidc_provider    = module.eks.oidc_provider
+
+  # The version of the EKS cluster's Kubernetes API server
   eks_cluster_version  = module.eks.cluster_version
 
   # Enable the following EKS add-ons.
@@ -96,8 +103,6 @@ module "eks_blueprints_kubernetes_addons" {
 # ArgoCD Admin Password credentials with Secrets Manager
 # Login to AWS Secrets manager with the same role as Terraform to extract the ArgoCD admin password with the secret name as "argocd"
 #---------------------------------------------------------------
-
-
 resource "random_password" "argocd" {
   length           = 16
   special          = true
