@@ -1,6 +1,5 @@
-Sure, here's the documentation in markdown language:
-
 # Exporter Documentation
+[![Go Coverage](https://github.com/atilsensalduz/mf-sre/wiki/coverage.svg)](https://raw.githack.com/wiki/atilsensalduz/mf-sre/coverage.html)
 
 ## Overview
 
