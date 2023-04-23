@@ -111,10 +111,6 @@ resource "aws_secretsmanager_secret_version" "argocd" {
   secret_string = random_password.argocd.result
 }
 
-data "aws_ssm_parameter" "argocd_repository_ssh_key" {
-  name            = "argocd_repository_ssh_key"
-}
-
 module "karpenter" {
   source  = "terraform-aws-modules/eks/aws//modules/karpenter"
   version = "~> 19.12"

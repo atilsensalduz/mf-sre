@@ -20,7 +20,7 @@ Before deploying the application and exporter, you will need to have the followi
 - `Terraform`
   This project uses Terraform and Terraform Cloud to deploy infrastructure component. Before use it you need to create Terraform Cloud organization and connect github repository to Terraform Cloud 
 
-  ![Terraform Cloud](./images/terraform-cloud.jpg)
+  ![Terraform Cloud](./images/terraform-cloud.png)
 
 - `Github` 
   This project uses Github Actions CI and ghcr.io to store applications' docker images. 
@@ -61,26 +61,26 @@ Before deploying the application and exporter, you will need to have the followi
 
    As I mentioned earlier the project uses ArgoCD to manage Continues Deployment. It uses Helm to manage configuration files. Our services related configurations are storing in ./cd/apps and ./cd/charts. ./cd/apps folder has configurations of ArgoCD application and ./cd/charts has Helm charts of deployment objects. Infra structure related configurations are storing  ./cd/infra and ./cd/infra-charts. ./cd/infra folder has infra structure components configurations of ArgoCD applications  and ./cd/infra-charts has their Helm charts.
   
-  ![ArgoCD](./images/argocd.jpg)
+  ![ArgoCD](./images/argocd.png)
 
 ## Prometheus Exporter
 
 This application fetches metrics from different services and exposes them as Prometheus metrics. The application uses the `/metrics` endpoint to fetch the metrics data in JSON format. The application periodically fetches the metrics and updates the Prometheus metrics.
 
-![Prometheus metric example](./images/prometheus-example-metric.jpg)
+![Prometheus metric example](./images/prometheus-example-metric.png)
 
 You can find detailed documentation in the following url:
 [**exporter service**](https://github.com/atilsensalduz/mf-sre/service/exporter/)
 
-![Prometheus exported metrics](./images/prometheus-exported-metrics.jpg)
+![Prometheus exported metrics](./images/prometheus-exported-metrics.png)
 
 
 ## Horizontal Pod Autoscaler with External Metrics
 This project uses prometheus-adapter to use external metrics by HPA. The Prometheus-Adapter rule is an essential component for extracting metrics from the http_requests_total metric produced by the main service. It is responsible for transforming the metric name and label, as well as computing the rate of change of the metric value. 
 
-![hpa](./images/hpa.jpg)
+![hpa](./images/hpa.png)
 
-![depyloyment](./images/deplyoment.jpg)
+![depyloyment](./images/deplyoment.png)
 
 
 The Prometheus-Adapter rule used for extracting metrics is as follows:
@@ -107,4 +107,4 @@ This rule has been configured to extract metrics from the `http_requests_total` 
 
 - `metricsQuery`: Defines the query used to compute the metric value. In this case, the query computes the rate of change of the metric value over the last 1 minute.
 
-![external-metric api](./images/external-metric-api.jpg)
+![external-metric api](./images/external-metric-api.png)
