@@ -99,7 +99,6 @@ module "eks_blueprints_kubernetes_addons" {
   enable_argo_rollouts  = true
   
   karpenter_node_iam_instance_profile        = module.karpenter.instance_profile_name
-  karpenter_sqs_queue_arn                    = module.karpenter.queue_arn
   karpenter_enable_spot_termination_handling = true
 }
 
