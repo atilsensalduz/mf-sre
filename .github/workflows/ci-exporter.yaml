@@ -38,14 +38,37 @@ jobs:
 
     - name: Test
       run: go test -v ./...
-
-    - name: Update coverage report
-      uses: ncruces/go-coverage-report@v0
+      
+    - name: Checkout wiki
+      uses: actions/checkout@v3
       with:
-        report: 'true'
-        chart: 'true'
-        amend: 'false'
-      continue-on-error: true
+        repository: ${{github.repository}}.wiki
+        path: ./.github/wiki/
+
+    - name: Generate coverage report
+      shell: bash
+      env:
+        INPUT_CHART:  true
+        INPUT_REPORT: true
+      run: |
+        ./coverage.sh
+        mv ./coverage.svg ./.github/wiki/
+        test ! -f ./coverage.html || mv ./coverage.html ./.github/wiki/
+        test ! -f ./coverage-chart.svg || mv ./coverage-chart.svg ./.github/wiki/
+        cat ./coverage.log >> ./.github/wiki/coverage.log
+        sort -u -o ./.github/wiki/coverage.log ./.github/wiki/coverage.log
+        
+    - name: Push to wiki
+      shell: bash
+      run: |
+        cd ./.github/wiki/
+        git add --all
+        git diff-index --quiet HEAD && exit
+        git config --local user.name "GitHub Action"
+        git config --local user.email "action@github.com"
+        test ${{inputs.amend}} == "true" && \
+          git commit --amend --no-edit && git push --force-with-lease || \
+          git commit -m "Update coverage" && git push
 
     - name: Go report card
       uses: creekorful/goreportcard-action@v1.0
