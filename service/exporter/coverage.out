@@ -1,0 +1,18 @@
+mode: set
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:28.46,30.16 2 1
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:30.16,32.3 1 0
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:34.2,35.16 2 1
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:35.16,37.3 1 0
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:38.2,40.37 2 1
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:40.37,42.3 1 0
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:44.2,45.16 2 1
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:45.16,47.3 1 0
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:49.2,50.49 2 1
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:50.49,52.3 1 0
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:54.2,54.15 1 1
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:58.22,59.6 1 1
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:59.6,62.17 2 1
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:62.17,66.12 3 0
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:70.3,75.30 4 1
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:101.13,107.58 3 0
+github.com/atilsensalduz/mf-sre/service/exporter/main.go:107.58,108.13 1 0
