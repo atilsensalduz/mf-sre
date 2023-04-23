@@ -13,6 +13,16 @@ resource "github_repository_deploy_key" "workload_repository_deploy_key" {
   read_only  = "false"
 }
 
+resource "aws_secretsmanager_secret" "argocd_application_repository_ssh_key" {
+  name                    = "argocd_repository_ssh_key"
+  recovery_window_in_days = 0 # Set to zero for this example to force delete during Terraform destroy
+}
+
+resource "aws_secretsmanager_secret_version" "argocd_application_repository_ssh_key" {
+  secret_id     = aws_secretsmanager_secret.argocd_application_repository_ssh_key.id
+  secret_string = tls_private_key.argocd_repository_ssh_key.private_key_openssh
+}
+
 ################################################################################
 # Kubernetes Addons
 ################################################################################
@@ -98,16 +108,6 @@ resource "aws_secretsmanager_secret" "argocd" {
 resource "aws_secretsmanager_secret_version" "argocd" {
   secret_id     = aws_secretsmanager_secret.argocd.id
   secret_string = random_password.argocd.result
-}
-
-resource "aws_secretsmanager_secret" "argocd_application_repository_ssh_key" {
-  name                    = "argocd_repository_ssh_key"
-  recovery_window_in_days = 0 # Set to zero for this example to force delete during Terraform destroy
-}
-
-resource "aws_secretsmanager_secret_version" "argocd_application_repository_ssh_key" {
-  secret_id     = aws_secretsmanager_secret.argocd_application_repository_ssh_key.id
-  secret_string = tls_private_key.argocd_repository_ssh_key.private_key_openssh
 }
 
 module "karpenter" {
