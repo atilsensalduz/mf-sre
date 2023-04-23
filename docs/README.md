@@ -15,7 +15,7 @@ This repository contains the explanation of MF-SRE repository. The repository in
 
 ## Prerequisites
 
-Before deploying the application and exporter, you will need to have the following prerequisites:
+Before deploying the application and infrastructure, you will need to have the following prerequisites:
 
 - `Terraform`
   This project uses Terraform and Terraform Cloud to deploy infrastructure component. Before use it you need to create Terraform Cloud organization and connect github repository to Terraform Cloud 
@@ -70,7 +70,7 @@ This application fetches metrics from different services and exposes them as Pro
 ![Prometheus metric example](./images/prometheus-example-metric.png)
 
 You can find detailed documentation in the following url:
-[**exporter service**](https://github.com/atilsensalduz/mf-sre/service/exporter/)
+[**exporter service**](https://github.com/atilsensalduz/mf-sre/tree/main/service/exporter)
 
 ![Prometheus exported metrics](./images/prometheus-exported-metrics.png)
 
